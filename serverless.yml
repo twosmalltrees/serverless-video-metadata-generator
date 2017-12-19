@@ -1,0 +1,19 @@
+# serverless.yml
+
+service: serverless-video-metadata-generator
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+functions:
+  extractMetadata:
+    handler: handler.extractMetadata
+    events:
+      - s3: 
+          bucket: your-uploads-bucket
+          event: s3:ObjectCreated:*
+  saveMetadata:
+    handler: handler.saveMetadata
+    events: 
+      - sns: your-notification-sns-topic
