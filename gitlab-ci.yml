@@ -1,0 +1,21 @@
+image: node:8.9.0
+
+before_script:
+  - npm install -g serverless
+  - npm install
+
+staging:
+  type: deploy
+  environment: staging
+  script:
+    - serverless deploy --stage=staging 
+  only:
+    - master
+
+production:
+  type: deploy
+  environment: production
+  script:
+    - serverless deploy --stage=production 
+  only:
+    - tags
