@@ -4,42 +4,29 @@
 service: serverless-video-metadata-generator
 
 custom:
+  bucketName: your-bucket-name
   snsPublishRoleName: snsPublishRole
-  snsTopicName: your-sns-topic
-  snsPublishRoleArn:
-    - 'Fn::Join':
-      - ':'
-      -
-        - arn:aws:iam
-        - Ref: AWS::Region
-        - Ref: AWS::AccountId
-        - snsPublishRole
-  snsTopicArn:
-    - 'Fn::Join':
-      - ':'
-      -
-        - arn:aws:sns
-        - Ref: AWS::Region
-        - Ref: AWS::AccountId
-        - your-sns-topic
+  snsTopicName: your-sns-topic-name
+  snsPublishRoleArn: arn:aws:iam:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsPublishRoleName}
+  snsTopicArn: arn:aws:sns:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}
 
 provider:
   name: aws
   runtime: nodejs6.10
   environment:
-    SNS_PUBLISH_ROLE_ARN: someArn
+    SNS_PUBLISH_ROLE_ARN: ${self:custom.snsPublishRoleArn}
 
 functions:
   extractMetadata:
     handler: handler.extractMetadata
     events:
       - s3: 
-          bucket: your-uploads-bucket
+          bucket: ${self:custom.bucketName}
           event: s3:ObjectCreated:*
   saveMetadata:
     handler: handler.saveMetadata
     events: 
-      - sns: your-sns-topic
+      - sns: ${self:custom.snsTopicName}
 
 resources:
   Resources:
