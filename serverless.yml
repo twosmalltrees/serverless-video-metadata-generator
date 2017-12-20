@@ -24,10 +24,20 @@ resources:
       Type: AWS::IAM::Role
       Properties:
         RoleName: snsPublishRole
+        AssumeRolePolicyDocument: 
+          Version: 2017
+          Statement: 
+            - 
+              Effect: Allow
+              Principal: 
+                Service: 
+                  - ec2.amazonaws.com
+              Action: 
+                - sts:AssumeRole
         Policies:
           - PolicyName:  snsPublishPolicy
             PolicyDocument: 
-              Version: '2017'
+              Version: 2017
               Statement: 
                 - Effect: Allow
                   Action: 
@@ -36,7 +46,7 @@ resources:
                     - 'Fn::Join':
                       - ':'
                       -
-                        - 'arn:aws:logs'
-                        - Ref: 'AWS::Region'
-                        - Ref: 'AWS::AccountId'
-                        - 'log-group:/aws/lambda/*:*:*'
+                        - arn:aws:sns
+                        - Ref: AWS::Region
+                        - Ref: AWS::AccountId
+                        - your-notification-sns-topic
