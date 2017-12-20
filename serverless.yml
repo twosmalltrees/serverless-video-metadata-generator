@@ -31,7 +31,7 @@ resources:
               Effect: Allow
               Principal: 
                 Service: 
-                  - ec2.amazonaws.com
+                  - rekognition.amazonaws.com
               Action: 
                 - sts:AssumeRole
         Policies:
