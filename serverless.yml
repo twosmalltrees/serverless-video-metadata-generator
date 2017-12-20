@@ -4,9 +4,9 @@
 service: serverless-video-metadata-generator
 
 custom:
-  bucketName: your-bucket-name
+  bucketName: your-bucket-name-goes-here
   snsPublishRoleName: snsPublishRole
-  snsTopicName: your-sns-topic-name
+  snsTopicName: your-sns-topic-name-goes-here
   snsPublishRoleArn: arn:aws:iam:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsPublishRoleName}
   snsTopicArn: arn:aws:sns:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}
 
