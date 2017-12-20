@@ -5,6 +5,7 @@ service: serverless-video-metadata-generator
 
 custom:
   snsPublishRoleName: snsPublishRole
+  snsTopicName: your-sns-topic
   snsPublishRoleArn:
     - 'Fn::Join':
       - ':'
@@ -20,7 +21,7 @@ custom:
         - arn:aws:sns
         - Ref: AWS::Region
         - Ref: AWS::AccountId
-        - your-notification-sns-topic
+        - ${self:custom.snsTopicName}
 
 provider:
   name: aws
@@ -38,7 +39,7 @@ functions:
   saveMetadata:
     handler: handler.saveMetadata
     events: 
-      - sns: your-notification-sns-topic
+      - sns: ${self:custom.snsTopicName}
 
 resources:
   Resources:
