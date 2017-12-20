@@ -3,8 +3,8 @@
 service: serverless-video-metadata-generator
 
 custom:
-  region: Ref: AWS::Region
-  accountId: Ref: AWS::AccountId
+  region: - Ref: AWS::Region
+  accountId: - Ref: AWS::AccountId
   snsTopicName: your-notification-sns-topic
   snsTopicArn: arn:aws:sns:${self.custom.region}:${self.custom.accountId}:${self:custom:snsTopicName}
   snsPublishRoleName: snsPublishRole
