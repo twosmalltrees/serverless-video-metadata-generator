@@ -7,7 +7,6 @@ custom:
   snsPublishRoleArn:
     - 'Fn::Join':
       - ':'
-      -
         - arn:aws:iam
         - Ref: AWS::Region
         - Ref: AWS::AccountId
@@ -15,12 +14,10 @@ custom:
   snsTopicArn:
     - 'Fn::Join':
       - ':'
-      -
         - arn:aws:sns
         - Ref: AWS::Region
         - Ref: AWS::AccountId
         - your-notification-sns-topic
-
 
 provider:
   name: aws
