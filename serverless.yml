@@ -12,7 +12,7 @@ custom:
         - arn:aws:iam
         - Ref: AWS::Region
         - Ref: AWS::AccountId
-        - your-notification-sns-topic
+        - ${self:custom.snsPublishRoleName}
   snsTopicArn:
     - 'Fn::Join':
       - ':'
