@@ -39,7 +39,7 @@ functions:
   saveMetadata:
     handler: handler.saveMetadata
     events: 
-      - sns: ${self:custom.snsTopicName}
+      - sns: your-sns-topic
 
 resources:
   Resources:
