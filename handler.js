@@ -1,6 +1,22 @@
 'use strict';
+import AWS from 'aws-sdk';
+
 
 module.exports.extractMetadata = (event, context, callback) => {
+  
+  const params = {
+    Video: {
+      S3Object: {
+        Bucket: 'hopeully-passed-in-event',
+        Name: 'hopefully-passed-in-event',
+      },
+      NotificationChannel: {
+        RoleArn: 'unsusre',
+        SNSTopicArn: 'topicARN'
+      }
+    }
+  }
+
   const response = {
     statusCode: 200,
     body: JSON.stringify({
