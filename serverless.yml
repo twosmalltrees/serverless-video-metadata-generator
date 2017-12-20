@@ -27,7 +27,7 @@ provider:
   name: aws
   runtime: nodejs6.10
   environment:
-    SNS_PUBLISH_ROLE_ARN: ${self:custom.snsPublishRoleArn}
+    SNS_PUBLISH_ROLE_ARN: someArn
 
 functions:
   extractMetadata:
