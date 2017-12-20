@@ -12,6 +12,15 @@ custom:
         - Ref: AWS::Region
         - Ref: AWS::AccountId
         - your-notification-sns-topic
+  snsTopicArn:
+    - 'Fn::Join':
+      - ':'
+      -
+        - arn:aws:sns
+        - Ref: AWS::Region
+        - Ref: AWS::AccountId
+        - your-notification-sns-topic
+
 
 provider:
   name: aws
@@ -54,11 +63,4 @@ resources:
                 - Effect: Allow
                   Action: 
                     - sns:Publish
-                  Resource:
-                    - 'Fn::Join':
-                      - ':'
-                      -
-                        - arn:aws:sns
-                        - Ref: AWS::Region
-                        - Ref: AWS::AccountId
-                        - your-notification-sns-topic
+                  Resource: ${self:custom.snsTopicArn}
