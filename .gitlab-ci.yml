@@ -8,7 +8,7 @@ staging:
   type: deploy
   environment: staging
   script:
-    - serverless deploy --stage=staging 
+    - serverless deploy --stage=staging --force 
   only:
     - master
 
@@ -16,6 +16,6 @@ production:
   type: deploy
   environment: production
   script:
-    - serverless deploy --stage=production 
+    - serverless deploy --stage=production --force
   only:
     - tags
