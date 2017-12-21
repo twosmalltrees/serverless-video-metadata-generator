@@ -20,6 +20,11 @@ provider:
         - iam:GetRole
         - iam:PassRole
       Resource: ${self:custom.snsPublishRoleArn}
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: ${self:custom.bucketArn}
 
 
 functions:
@@ -61,6 +66,7 @@ resources:
 
 custom:
   bucketName: your-bucket-name-goes-here
+  bucketArn: arn:aws:s3:::${self:custom.bucketName}/*
   snsTopicName: your-sns-topic-name-goes-here
   snsPublishRoleName: snsPublishRole
   snsPublishRoleArn: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/${self:custom.snsPublishRoleName}
