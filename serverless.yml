@@ -3,18 +3,12 @@
 
 service: serverless-video-metadata-generator
 
-custom:
-  bucketName: your-bucket-name-goes-here
-  snsPublishRoleName: snsPublishRole
-  snsTopicName: your-sns-topic-name-goes-here
-  snsPublishRoleArn: arn:aws:iam:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsPublishRoleName}
-  snsTopicArn: arn:aws:sns:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}
-
 provider:
   name: aws
   runtime: nodejs6.10
   environment:
     SNS_PUBLISH_ROLE_ARN: ${self:custom.snsPublishRoleArn}
+    SNS_TOPIC_ARN: ${self:custom.snsTopicArn}
 
 functions:
   extractMetadata:
@@ -52,3 +46,10 @@ resources:
                   Action: 
                     - sns:Publish
                   Resource: ${self:custom.snsTopicArn}
+
+custom:
+  bucketName: your-bucket-name-goes-here
+  snsTopicName: your-sns-topic-name-goes-here
+  snsPublishRoleName: snsPublishRole
+  snsPublishRoleArn: arn:aws:iam:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsPublishRoleName}
+  snsTopicArn: arn:aws:sns:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}
