@@ -15,6 +15,11 @@ provider:
         - rekognition:StartLabelDetection
         - rekognition:GetLabelDetection
       Resource: '*'
+    - Effect: Allow
+      Action:
+        - iam:GetRole
+        - iam:PassRole
+      Resource: ${self:custom.snsPublishRoleArn}
 
 
 functions:
