@@ -1,6 +1,7 @@
 'use strict';
-import AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
 
+const rekognition = new AWS.Rekognition();
 
 module.exports.extractMetadata = (event, context, callback) => {
   const bucketName = event.Records[0].s3.bucket.name;
@@ -16,17 +17,20 @@ module.exports.extractMetadata = (event, context, callback) => {
         SNSTopicArn: process.env.SNS_TOPIC_ARN,
       }
     }
-  }
-
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Successfully processed',
-      input: event,
-    }),
   };
 
-  callback(null, response);
+  rekognition.startLabelDetection(params).promise()
+    .then((res) => {
+      const response = {
+        statusCode: 200,
+        body: JSON.stringify(res),
+      };
+      callback(null, response);      
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err, null);      
+    });
 };
 
 module.exports.saveMetadata = (event, context, callback) => {
