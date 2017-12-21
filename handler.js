@@ -10,13 +10,13 @@ module.exports.extractMetadata = (event, context, callback) => {
     Video: {
       S3Object: {
         Bucket: bucketName,
-        Name: objectKey,
-      },
-      NotificationChannel: {
-        RoleArn: process.env.SNS_PUBLISH_ROLE_ARN,
-        SNSTopicArn: process.env.SNS_TOPIC_ARN,
+        Name: objectKey
       }
-    }
+    },
+    NotificationChannel: {
+      RoleArn: process.env.SNS_PUBLISH_ROLE_ARN,
+      SNSTopicArn: process.env.SNS_TOPIC_ARN,
+    },
   };
 
   rekognition.startLabelDetection(params).promise()
