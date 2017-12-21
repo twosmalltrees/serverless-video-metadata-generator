@@ -52,4 +52,4 @@ custom:
   snsTopicName: your-sns-topic-name-goes-here
   snsPublishRoleName: snsPublishRole
   snsPublishRoleArn: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/${self:custom.snsPublishRoleName}
-  snsTopicArn: arn:aws:sns::${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}
+  snsTopicArn: arn:aws:sns:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}
