@@ -35,6 +35,7 @@ module.exports.extractMetadata = (event, context, callback) => {
 };
 
 module.exports.saveMetadata = (event, context, callback) => {
+  console.log(event.Records[0].Sns);
   const jobId = event.Records[0].Sns.JobId;
   const bucketName = event.Records[0].Sns.Video.S3Bucket;  
   const objectKey = event.Records[0].Sns.Video.S3ObjectName;
