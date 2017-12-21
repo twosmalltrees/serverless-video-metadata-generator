@@ -9,6 +9,12 @@ provider:
   environment:
     SNS_PUBLISH_ROLE_ARN: ${self:custom.snsPublishRoleArn}
     SNS_TOPIC_ARN: ${self:custom.snsTopicArn}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - rekognition:StartLabelDetection
+        - rekognition:GetLabelDetection
+
 
 functions:
   extractMetadata:
