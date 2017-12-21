@@ -35,17 +35,24 @@ module.exports.extractMetadata = (event, context, callback) => {
 };
 
 module.exports.saveMetadata = (event, context, callback) => {
-  console.log(event);
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
+  const jobId = event.Records[0].Sns.JobId;
+  const bucketName = event.Records[0].Sns.Video.S3Bucket;  
+  const objectKey = event.Records[0].Sns.Video.S3ObjectName;
+
+  const rekognitionParams = {
+    JobId: jobId,
   };
 
-  callback(null, response);
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+  rekognition.getLabelDetection(rekognitionParams).promise()
+    .then((res) => {
+      const response = {
+        statusCode: 200,
+        body: JSON.stringify(res),
+      };
+      callback(null, response);
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err, null);      
+    });
 };
