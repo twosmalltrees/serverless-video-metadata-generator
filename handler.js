@@ -56,7 +56,7 @@ module.exports.saveMetadata = (event, context, callback) => {
         Key: metadataObjectKey,
         Body: JSON.stringify(res),
       };
-      s3.putObject(params).promise()
+      s3.putObject(s3Params).promise()
         .then((res) => {
           const response = {
             statusCode: 200,
