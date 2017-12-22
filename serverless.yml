@@ -34,6 +34,8 @@ functions:
       - s3: 
           bucket: ${self:custom.bucketName}
           event: s3:ObjectCreated:*
+          rules:
+            - suffix: .mp4
   saveMetadata:
     handler: handler.saveMetadata
     events: 
