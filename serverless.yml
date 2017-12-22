@@ -1,7 +1,14 @@
 # serverless.yml
-# test
 
 service: serverless-video-metadata-generator
+
+custom:
+  bucketName: your-bucket-name-goes-here
+  bucketArn: arn:aws:s3:::${self:custom.bucketName}/*
+  snsTopicName: your-sns-topic-name-goes-here
+  snsPublishRoleName: snsPublishRole
+  snsPublishRoleArn: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/${self:custom.snsPublishRoleName}
+  snsTopicArn: arn:aws:sns:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}
 
 provider:
   name: aws
@@ -65,11 +72,3 @@ resources:
                   Action: 
                     - sns:Publish
                   Resource: ${self:custom.snsTopicArn}
-
-custom:
-  bucketName: your-bucket-name-goes-here
-  bucketArn: arn:aws:s3:::${self:custom.bucketName}/*
-  snsTopicName: your-sns-topic-name-goes-here
-  snsPublishRoleName: snsPublishRole
-  snsPublishRoleArn: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/${self:custom.snsPublishRoleName}
-  snsTopicArn: arn:aws:sns:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:${self:custom.snsTopicName}

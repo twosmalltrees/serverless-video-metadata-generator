@@ -1,13 +1,12 @@
 'use strict';
 const AWS = require('aws-sdk');
-AWS.config.update({region: 'us-east-1'});
-
 const rekognition = new AWS.Rekognition();
 const s3 = new AWS.S3();
 
 module.exports.extractMetadata = (event, context, callback) => {
   const bucketName = event.Records[0].s3.bucket.name;
   const objectKey = event.Records[0].s3.object.key;
+
   const params = {
     Video: {
       S3Object: {
@@ -36,13 +35,9 @@ module.exports.extractMetadata = (event, context, callback) => {
 };
 
 module.exports.saveMetadata = (event, context, callback) => {
-  console.log(event);
   const message = JSON.parse(event.Records[0].Sns.Message);
-  console.log(message);
-  const jobId = message.JobId;
   const bucketName = message.Video.S3Bucket;  
   const objectKey = message.Video.S3ObjectName;
-
   const metadataObjectKey = objectKey + '.metadata.json';
 
   const rekognitionParams = {
