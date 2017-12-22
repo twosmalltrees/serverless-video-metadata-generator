@@ -3,6 +3,7 @@ const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 
 const rekognition = new AWS.Rekognition();
+const s3 = new AWS.S3();
 
 module.exports.extractMetadata = (event, context, callback) => {
   const bucketName = event.Records[0].s3.bucket.name;
@@ -42,18 +43,27 @@ module.exports.saveMetadata = (event, context, callback) => {
   const bucketName = message.Video.S3Bucket;  
   const objectKey = message.Video.S3ObjectName;
 
+  const metadataObjectKey = objectKey + '.metadata.json';
+
   const rekognitionParams = {
     JobId: jobId,
   };
 
   rekognition.getLabelDetection(rekognitionParams).promise()
     .then((res) => {
-      console.log(res);
-      const response = {
-        statusCode: 200,
-        body: JSON.stringify(res),
+      const s3Params = {
+        Bucket: bucketName,
+        Key: metadataObjectKey,
+        Body: JSON.stringify(res),
       };
-      callback(null, response);
+      s3.putObject(params).promise()
+        .then((res) => {
+          const response = {
+            statusCode: 200,
+            body: JSON.stringify(res),
+          };
+          callback(null, response);
+        });
     })
     .catch((err) => {
       console.log(err);
