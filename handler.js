@@ -36,9 +36,10 @@ module.exports.extractMetadata = (event, context, callback) => {
 
 module.exports.saveMetadata = (event, context, callback) => {
   const message = JSON.parse(event.Records[0].Sns.Message);
+  const jobId = message.JobId;     
   const bucketName = message.Video.S3Bucket;  
   const objectKey = message.Video.S3ObjectName;
-  const metadataObjectKey = objectKey + '.metadata.json';
+  const metadataObjectKey = objectKey + '.labels.json';
 
   const rekognitionParams = {
     JobId: jobId,
