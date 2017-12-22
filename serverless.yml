@@ -19,8 +19,8 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action: 
-        - rekognition:StartLabelDetection
-        - rekognition:GetLabelDetection
+        - rekognition:StartCelebrityRecognition
+        - rekognition:GetCelebrityRecognition
       Resource: '*'
     - Effect: Allow
       Action:
