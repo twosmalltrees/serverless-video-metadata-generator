@@ -41,7 +41,6 @@ module.exports.saveMetadata = (event, context, callback) => {
   const objectKey = message.Video.S3ObjectName;
   const metadataObjectKey = objectKey + '.people.json';
 
-
   const rekognitionParams = {
     JobId: jobId,
   };

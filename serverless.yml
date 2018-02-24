@@ -33,7 +33,6 @@ provider:
         - s3:PutObject
       Resource: ${self:custom.bucketArn}
 
-
 functions:
   extractMetadata:
     handler: handler.extractMetadata
